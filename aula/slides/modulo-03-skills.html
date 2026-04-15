@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 03: Skills</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 28px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 700px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .skill-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; max-width: 780px; }
+  .skill-card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 14px; }
+  .skill-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; margin-bottom: 6px; }
+  .skill-desc { font-size: 12px; color: #444; line-height: 1.4; }
+  .skill-card.active-skill { border-color: #00ff4140; background: #0d150d; }
+  .skill-card.active-skill .skill-name { opacity: 1; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 780px; }
+  .card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 22px; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.5; margin-bottom: 10px; letter-spacing: 2px; }
+  .card-body { font-size: 14px; color: #777; line-height: 1.6; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · SKILLS</div>
+    <div class="eyebrow">Módulo 03</div>
+    <h1>Habilidades <span class="green">Jedi</span><br>desbloqueadas.</h1>
+    <p class="lead">8 skills pro dia a dia. Você chama, a Força executa.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · VISÃO GERAL</div>
+    <div class="eyebrow">Seu arsenal completo</div>
+    <div class="skill-grid">
+      <div class="skill-card active-skill"><div class="skill-name">/iniciar</div><div class="skill-desc">liga o sócio com contexto</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/carrossel</div><div class="skill-desc">conteúdo pra redes</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/roteiro-post</div><div class="skill-desc">roteiro de post ou vídeo</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/proposta-comercial</div><div class="skill-desc">proposta em HTML</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/email-profissional</div><div class="skill-desc">email pronto pra enviar</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/analisar-dados</div><div class="skill-desc">relatório de planilha</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/publicar-site</div><div class="skill-desc">HTML no ar em 1 cmd</div></div>
+      <div class="skill-card active-skill"><div class="skill-name">/syncar</div><div class="skill-desc">salva no GitHub</div></div>
+    </div>
+    <div class="slide-num">02</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · 3.1 INICIAR</div>
+    <div class="eyebrow">Aula 3.1 — /iniciar</div>
+    <h2>Ligando o sócio<br>todo <span class="green">dia</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="ps">→ </span><span class="cmd">/iniciar</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">Sócio: E aí, [nome]! Carregando contexto...</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> 3 operações mapeadas</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Meta do mês: R$15k (atual: R$8k)</span></div>
+      <div class="t-line"><span class="out-y">[!]</span><span class="out">  Proposta do cliente X ainda em aberto</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">→ O que vamos atacar hoje?</span></div>
+    </div>
+    <div class="slide-num">03</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · 3.2-3.3 CONTEÚDO</div>
+    <div class="eyebrow">Aulas 3.2 e 3.3 — Conteúdo</div>
+    <h2>Conteúdo que<br><span class="green">converte</span>, não só que engaja.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">/carrossel</div>
+        <div class="card-body">Roteiro slide a slide + hashtags + legenda. Instagram e TikTok com identidade visual da sua marca.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">/roteiro-post</div>
+        <div class="card-body">De uma ideia bruta para roteiro gravável. Reels, Shorts, post de texto ou YouTube — com gancho, desenvolvimento e CTA.</div>
+      </div>
+    </div>
+    <div class="slide-num">04</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · 3.4-3.5 VENDAS</div>
+    <div class="eyebrow">Aulas 3.4 e 3.5 — Vendas</div>
+    <h2>Fechando mais<br><span class="green">sem escrever</span> do zero.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">/proposta-comercial</div>
+        <div class="card-body">Fale o briefing em linguagem natural. O sócio gera uma proposta profissional em HTML com a cara da sua marca.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">/email-profissional</div>
+        <div class="card-body">Conta o contexto, diz o objetivo. Email com assunto, corpo e CTA certos — pronto pra enviar em segundos.</div>
+      </div>
+    </div>
+    <div class="slide-num">05</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · 3.6 DADOS</div>
+    <div class="eyebrow">Aula 3.6 — /analisar-dados</div>
+    <h2>Decisões com<br><span class="green">inteligência</span>, não chute.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">// joga qualquer arquivo na pasta dados/</span></div>
+      <div class="t-line"><span class="ps">→ </span><span class="cmd">/analisar-dados dados/vendas-abril.csv</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">Sócio: Analisando 247 registros...</span></div>
+      <div class="t-line"><span class="out-g">→ Produto X representa 68% do faturamento</span></div>
+      <div class="t-line"><span class="out-g">→ Pico de vendas: terça e quinta, 19h-21h</span></div>
+      <div class="t-line"><span class="out-y">→ Produto Y: alto volume, baixa margem — revisar</span></div>
+    </div>
+    <div class="slide-num">06</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_03 · 3.7-3.8 INFRA</div>
+    <div class="eyebrow">Aulas 3.7 e 3.8 — Infraestrutura</div>
+    <h2>Publicar e salvar<br>com <span class="green">1 comando</span>.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">/publicar-site</div>
+        <div class="card-body">Qualquer HTML no ar via Vercel. Link compartilhável na hora — proposta, landing page, card visual.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">/syncar</div>
+        <div class="card-body">Git commit + push com mensagem automática. Configura o GitHub na primeira vez. Seu trabalho sempre salvo.</div>
+      </div>
+    </div>
+    <div class="slide-num">07</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-03$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 7</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) { slides.forEach(s=>s.classList.remove('active')); slides[n].classList.add('active'); document.getElementById('counter').textContent=(n+1)+' / '+slides.length; document.getElementById('btnPrev').disabled=n===0; document.getElementById('btnNext').disabled=n===slides.length-1; }
+  function next() { if(cur<slides.length-1) show(++cur); }
+  function prev() { if(cur>0) show(--cur); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key===' ')next(); if(e.key==='ArrowLeft')prev(); });
+</script>
+</body>
+</html>

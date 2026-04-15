@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 04: Avançado</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 28px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 700px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .list { list-style: none; width: 100%; max-width: 680px; }
+  .list li { display: flex; gap: 16px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid #111; font-size: 15px; color: #bbb; line-height: 1.5; }
+  .list li:last-child { border-bottom: none; }
+  .li-icon { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; min-width: 20px; margin-top: 2px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 780px; }
+  .card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 22px; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.5; margin-bottom: 10px; letter-spacing: 2px; }
+  .card-body { font-size: 14px; color: #777; line-height: 1.6; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · AVANÇADO</div>
+    <div class="eyebrow">Módulo 04</div>
+    <h1>Virando<br><span class="green">Mestre</span> da Ordem.</h1>
+    <p class="lead">Skills customizadas, MCPs, projetos múltiplos. Aqui você para de usar o sistema e começa a moldá-lo.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · 4.1 SKILLS CUSTOM</div>
+    <div class="eyebrow">Aula 4.1 — Criando suas skills</div>
+    <h2>Anatomia de<br>uma <span class="green">skill</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">// toda skill é um arquivo .md em:</span></div>
+      <div class="t-line"><span class="out">.claude/commands/nome-da-skill.md</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out">// estrutura básica:</span></div>
+      <div class="t-line"><span class="out-g">O que fazer quando este comando for chamado.</span></div>
+      <div class="t-line"><span class="out-g">Quais perguntas fazer. Como executar. O que entregar.</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out">// exemplo: /briefing-cliente, /relatorio-semanal,</span></div>
+      <div class="t-line"><span class="out">// /onboarding-novo-aluno, /script-vendas...</span></div>
+    </div>
+    <div class="slide-num">02</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · 4.2 PROJETOS</div>
+    <div class="eyebrow">Aula 4.2 — /novo-projeto</div>
+    <h2>Cada projeto com<br>seu <span class="green">próprio</span> sócio.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Cria pasta isolada com CLAUDE.md dedicado ao projeto</span></li>
+      <li><span class="li-icon">▸</span><span>Contexto separado — não mistura lançamento com operação diária</span></li>
+      <li><span class="li-icon">▸</span><span>Arquivo de tarefas e entregáveis por projeto</span></li>
+      <li><span class="li-icon">▸</span><span>Útil pra: lançamentos, clientes, eventos, campanhas</span></li>
+    </ul>
+    <div class="slide-num">03</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · 4.3 ATUALIZAR</div>
+    <div class="eyebrow">Aula 4.3 — /atualizar</div>
+    <h2>Mantendo o sócio<br>sempre <span class="green">afiado</span>.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">QUANDO USAR</div>
+        <div class="card-body">Depois de mudanças grandes: novo produto, novo canal, nova meta, mudança de equipe ou de estratégia.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">O QUE ELE FAZ</div>
+        <div class="card-body">Varre todo o projeto, identifica o que ficou desatualizado na memória e sincroniza tudo. Sócio zerado com a realidade atual.</div>
+      </div>
+    </div>
+    <div class="slide-num">04</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · 4.4 MCPS</div>
+    <div class="eyebrow">Aula 4.4 — MCPs</div>
+    <h2>Expandindo os<br><span class="green">poderes</span> da Ordem.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span><strong>O que são:</strong> extensões que conectam o Claude a ferramentas externas</span></li>
+      <li><span class="li-icon">▸</span><span><strong>Exemplos:</strong> Google Drive, Notion, Supabase, Figma, GitHub</span></li>
+      <li><span class="li-icon">▸</span><span>Com MCP do Drive: sócio lê suas planilhas diretamente</span></li>
+      <li><span class="li-icon">▸</span><span>Com MCP do Notion: sócio atualiza sua base de conhecimento</span></li>
+      <li><span class="li-icon">▸</span><span>Catálogo disponível em <code>templates/ferramentas/catalogo.md</code></span></li>
+    </ul>
+    <div class="slide-num">05</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_04 · 4.5 CLAUDE.MD CUSTOM</div>
+    <div class="eyebrow">Aula 4.5 — Customizando o CLAUDE.md</div>
+    <h2>O sócio do seu jeito,<br>pra <span class="green">sua empresa</span>.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Adicione regras específicas do seu negócio</span></li>
+      <li><span class="li-icon">▸</span><span>Defina o que ele nunca pode fazer ou sugerir</span></li>
+      <li><span class="li-icon">▸</span><span>Ensine expressões e termos do seu nicho</span></li>
+      <li><span class="li-icon">▸</span><span>Configure alertas — ex: "sempre que eu mencionar X, pergunte Y"</span></li>
+      <li><span class="li-icon">▸</span><span>É um documento vivo — evolui com o negócio</span></li>
+    </ul>
+    <div class="slide-num">06</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-04$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 6</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) { slides.forEach(s=>s.classList.remove('active')); slides[n].classList.add('active'); document.getElementById('counter').textContent=(n+1)+' / '+slides.length; document.getElementById('btnPrev').disabled=n===0; document.getElementById('btnNext').disabled=n===slides.length-1; }
+  function next() { if(cur<slides.length-1) show(++cur); }
+  function prev() { if(cur>0) show(--cur); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key===' ')next(); if(e.key==='ArrowLeft')prev(); });
+</script>
+</body>
+</html>

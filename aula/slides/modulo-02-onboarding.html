@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 02: Onboarding</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 28px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 680px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .blocks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width: 100%; max-width: 780px; }
+  .block { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 16px; text-align: center; }
+  .block-num { font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #00ff41; font-weight: 700; margin-bottom: 8px; }
+  .block-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #444; line-height: 1.4; }
+  .list { list-style: none; width: 100%; max-width: 680px; }
+  .list li { display: flex; gap: 16px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid #111; font-size: 15px; color: #bbb; line-height: 1.5; }
+  .list li:last-child { border-bottom: none; }
+  .li-icon { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; min-width: 20px; margin-top: 2px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 760px; }
+  .card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 22px; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.5; margin-bottom: 10px; letter-spacing: 2px; }
+  .card-body { font-size: 14px; color: #777; line-height: 1.6; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · ONBOARDING</div>
+    <div class="eyebrow">Módulo 02</div>
+    <h1>Calibrando seu<br><span class="green">Mestre Jedi</span>.</h1>
+    <p class="lead">O /setup vai entrevistar você. Quanto mais você contar, mais poderoso o sócio fica.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · ONBOARDING</div>
+    <div class="eyebrow">O que acontece no /setup</div>
+    <div class="blocks">
+      <div class="block"><div class="block-num">01</div><div class="block-label">Quem é você</div></div>
+      <div class="block"><div class="block-num">02</div><div class="block-label">As operações</div></div>
+      <div class="block"><div class="block-num">03</div><div class="block-label">Os números</div></div>
+      <div class="block"><div class="block-num">04</div><div class="block-label">Os clientes</div></div>
+      <div class="block"><div class="block-num">05</div><div class="block-label">Marketing e canais</div></div>
+      <div class="block"><div class="block-num">06</div><div class="block-label">Ferramentas</div></div>
+      <div class="block"><div class="block-num">07</div><div class="block-label">Prioridades</div></div>
+      <div class="block"><div class="block-num">✓</div><div class="block-label">Memória salva</div></div>
+    </div>
+    <div class="slide-num">02</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · 2.1 SETUP</div>
+    <div class="eyebrow">Aula 2.1 — Rodando o /setup</div>
+    <h2>Seu primeiro contato<br>com o <span class="green">sócio</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="ps">geek@os:~/geek-os-claude$ </span><span class="cmd">claude</span></div>
+      <div class="t-line"><span class="out-g">→ </span><span class="cmd">/setup</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">Sócio: E aí! Sou seu sócio de IA. A partir de agora</span></div>
+      <div class="t-line"><span class="out">       trabalhamos juntos pra crescer esse negócio.</span></div>
+      <div class="t-line"><span class="out">       Vou fazer perguntas em blocos. Responde com calma.</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">→ Qual é o seu nome?</span> <span class="out-y">_</span></div>
+    </div>
+    <div class="slide-num">03</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · 2.1 COMO RESPONDER</div>
+    <div class="eyebrow">Como responder bem</div>
+    <h2>Detalhe é <span class="green">poder</span>.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">RESPOSTA FRACA</div>
+        <div class="card-body">"vender mais"<br><br>O sócio vai ter pouco contexto pra ajudar de verdade.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">RESPOSTA FORTE</div>
+        <div class="card-body">"Tenho dificuldade em converter quem vem pelo Instagram. Ticket R$997, vendo 3 por mês, quero chegar em 10."</div>
+      </div>
+    </div>
+    <div class="slide-num">04</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · 2.2 CLAUDE.MD</div>
+    <div class="eyebrow">Aula 2.2 — O CLAUDE.md</div>
+    <h2>O cérebro do <span class="green">sistema</span>.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Define a <strong>personalidade</strong> do sócio — como ele fala, pensa e age</span></li>
+      <li><span class="li-icon">▸</span><span>Define o <strong>comportamento padrão</strong> — o que fazer, o que evitar</span></li>
+      <li><span class="li-icon">▸</span><span>Carregado <strong>automaticamente</strong> toda vez que você abre o projeto</span></li>
+      <li><span class="li-icon">▸</span><span>Você pode e deve <strong>customizar</strong> conforme aprende mais</span></li>
+    </ul>
+    <div class="slide-num">05</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · 2.3 MEMÓRIA</div>
+    <div class="eyebrow">Aula 2.3 — Sistema de memória</div>
+    <h2>A Força que <span class="green">não se perde</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">memory/</span></div>
+      <div class="t-line"><span class="out">├── MEMORY.md           </span><span class="out-g">← índice de tudo</span></div>
+      <div class="t-line"><span class="out">├── perfil_fundador.md  </span><span class="out-g">← quem você é</span></div>
+      <div class="t-line"><span class="out">├── operacoes.md        </span><span class="out-g">← suas frentes de negócio</span></div>
+      <div class="t-line"><span class="out">├── numeros.md          </span><span class="out-g">← faturamento e metas</span></div>
+      <div class="t-line"><span class="out">├── clientes.md         </span><span class="out-g">← perfil do cliente ideal</span></div>
+      <div class="t-line"><span class="out">└── bloqueios.md        </span><span class="out-g">← o que já não funcionou</span></div>
+    </div>
+    <div class="slide-num">06</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_02 · 2.4 MARCA</div>
+    <div class="eyebrow">Aula 2.4 — Identidade da marca</div>
+    <h2>Ensinando o sócio<br>sua <span class="green">identidade</span>.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Cores principais da marca (código hex)</span></li>
+      <li><span class="li-icon">▸</span><span>Fontes utilizadas (se souber)</span></li>
+      <li><span class="li-icon">▸</span><span>Tom de voz — como você fala com o cliente</span></li>
+      <li><span class="li-icon">▸</span><span>Posicionamento — o que te diferencia</span></li>
+      <li><span class="li-icon">▸</span><span>Frases que usa vs. frases que evita</span></li>
+    </ul>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#2a3a2a;margin-top:16px">// salvo em marca/ — o sócio usa em todo conteúdo que gera</p>
+    <div class="slide-num">07</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-02$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 7</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) { slides.forEach(s=>s.classList.remove('active')); slides[n].classList.add('active'); document.getElementById('counter').textContent=(n+1)+' / '+slides.length; document.getElementById('btnPrev').disabled=n===0; document.getElementById('btnNext').disabled=n===slides.length-1; }
+  function next() { if(cur<slides.length-1) show(++cur); }
+  function prev() { if(cur>0) show(--cur); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key===' ')next(); if(e.key==='ArrowLeft')prev(); });
+</script>
+</body>
+</html>

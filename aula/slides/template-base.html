@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Slides</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* SLIDE CONTAINER */
+  .slides { flex: 1; position: relative; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .slide.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* SLIDE TYPES */
+  .slide-cover { background: #0a0a0f; text-align: center; }
+  .slide-content { background: #0a0a0f; }
+  .slide-terminal { background: #050508; }
+  .slide-highlight { background: #0d120d; }
+
+  /* GRID LINE */
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(#00ff4106 1px, transparent 1px),
+      linear-gradient(90deg, #00ff4106 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* CORNER DECORATION */
+  .corner-tl, .corner-br {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: #00ff4130;
+    border-style: solid;
+  }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+
+  /* SLIDE NUMBER */
+  .slide-num {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #2a3a2a;
+  }
+
+  /* MODULE BADGE */
+  .module-badge {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #00ff41;
+    opacity: 0.4;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* TYPOGRAPHY */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00ff41;
+    opacity: 0.6;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 52px;
+    font-weight: 700;
+    color: #f0f0f0;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+
+  h1 .green { color: #00ff41; }
+
+  h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 600;
+    color: #e0e0e0;
+    line-height: 1.2;
+    margin-bottom: 32px;
+    letter-spacing: -1px;
+  }
+
+  h2 .green { color: #00ff41; }
+
+  .lead {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.7;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  .quote {
+    font-size: 22px;
+    color: #888;
+    font-style: italic;
+    line-height: 1.6;
+    max-width: 700px;
+    text-align: center;
+    border-left: 2px solid #00ff4140;
+    padding-left: 24px;
+    text-align: left;
+  }
+
+  .quote-author {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00ff41;
+    opacity: 0.5;
+    margin-top: 12px;
+  }
+
+  /* TERMINAL BLOCK */
+  .terminal {
+    background: #050508;
+    border: 1px solid #1a2a1a;
+    border-radius: 6px;
+    padding: 24px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #27c93f; }
+
+  .terminal-line { margin-bottom: 4px; }
+  .prompt-sym { color: #00ff41; }
+  .cmd { color: #e0e0e0; }
+  .output { color: #666; }
+  .output-green { color: #00ff41; }
+  .output-yellow { color: #ffbd2e; }
+
+  /* LIST */
+  .list { list-style: none; width: 100%; max-width: 700px; }
+
+  .list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid #111;
+    font-size: 16px;
+    color: #ccc;
+    line-height: 1.5;
+  }
+
+  .list li:last-child { border-bottom: none; }
+
+  .list-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #00ff41;
+    min-width: 20px;
+    margin-top: 2px;
+  }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .col-card {
+    background: #0d120d;
+    border: 1px solid #1a2a1a;
+    border-radius: 4px;
+    padding: 24px;
+  }
+
+  .col-card-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #00ff41;
+    opacity: 0.6;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .col-card-body {
+    font-size: 15px;
+    color: #aaa;
+    line-height: 1.6;
+  }
+
+  /* HIGHLIGHT NUMBER */
+  .big-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 100px;
+    font-weight: 700;
+    color: #00ff41;
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 32px;
+    border-top: 1px solid #111;
+    background: #050508;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #00ff41;
+    opacity: 0.4;
+  }
+
+  .nav-controls { display: flex; gap: 8px; }
+
+  button {
+    background: none;
+    border: 1px solid #1a2a1a;
+    color: #444;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+
+  .nav-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #2a2a2a;
+  }
+</style>
+</head>
+<body>
+
+<div class="slides" id="slides">
+  <!-- SLIDES VÃO AQUI -->
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 1</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  function show(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('counter').textContent = (n+1) + ' / ' + slides.length;
+    document.getElementById('btnPrev').disabled = n === 0;
+    document.getElementById('btnNext').disabled = n === slides.length - 1;
+  }
+
+  function next() { if (current < slides.length-1) show(++current); }
+  function prev() { if (current > 0) show(--current); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  show(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 05: Operação</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 28px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 700px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .list { list-style: none; width: 100%; max-width: 680px; }
+  .list li { display: flex; gap: 16px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid #111; font-size: 15px; color: #bbb; line-height: 1.5; }
+  .list li:last-child { border-bottom: none; }
+  .li-icon { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; min-width: 20px; margin-top: 2px; }
+  .quote { font-size: 20px; color: #777; font-style: italic; line-height: 1.6; max-width: 680px; border-left: 2px solid #00ff4140; padding-left: 24px; }
+  .quote-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.5; margin-top: 12px; }
+  .day-row { display: flex; gap: 0; width: 100%; max-width: 740px; }
+  .day-block { flex: 1; padding: 16px 14px; border-right: 1px solid #111; }
+  .day-block:last-child { border-right: none; }
+  .day-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; margin-bottom: 8px; }
+  .day-task { font-size: 12px; color: #555; line-height: 1.5; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · OPERAÇÃO</div>
+    <div class="eyebrow">Módulo 05</div>
+    <h1>Rotina de um<br><span class="green">Geek</span> que escala.</h1>
+    <p class="lead">O sistema está pronto. Agora é sobre como operar todo dia com um sócio do seu lado.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · 5.1 ROTINA</div>
+    <div class="eyebrow">Aula 5.1 — Rotina diária</div>
+    <h2>Como estruturar<br>o <span class="green">dia</span>.</h2>
+    <div class="day-row" style="border: 1px solid #1a2a1a; border-radius: 4px; overflow: hidden;">
+      <div class="day-block" style="background:#0d120d">
+        <div class="day-label">MANHÃ</div>
+        <div class="day-task">/iniciar<br>revisar prioridades<br>atacar o item 1</div>
+      </div>
+      <div class="day-block">
+        <div class="day-label">TARDE</div>
+        <div class="day-task">executar com o sócio<br>delegar o que trava<br>conteúdo ou vendas</div>
+      </div>
+      <div class="day-block" style="background:#0d120d">
+        <div class="day-label">NOITE</div>
+        <div class="day-task">/syncar<br>anotar o que aprendeu<br>planejar amanhã</div>
+      </div>
+    </div>
+    <div class="slide-num">02</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · 5.2 DELEGAR</div>
+    <div class="eyebrow">Aula 5.2 — Delegando tarefas</div>
+    <h2>Como dar contexto<br>pra <span class="green">autonomia total</span>.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Diga o objetivo, não só a tarefa — "quero fechar X, não apenas escrever o email"</span></li>
+      <li><span class="li-icon">▸</span><span>Dê as restrições — prazo, tom, o que não pode falar</span></li>
+      <li><span class="li-icon">▸</span><span>Deixe o sócio perguntar se precisar — não corte o diálogo</span></li>
+      <li><span class="li-icon">▸</span><span>Revise o resultado e dê feedback — ele aprende com isso</span></li>
+    </ul>
+    <div class="slide-num">03</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · 5.3 PROCESSOS</div>
+    <div class="eyebrow">Aula 5.3 — SOPs com IA</div>
+    <h2>Tirando da sua cabeça<br>e <span class="green">documentando</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">Você: "Preciso documentar como faço o onboarding de novos alunos."</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">Sócio: Me conta o que você faz, do zero ao fim.</span></div>
+      <div class="t-line"><span class="out">       Eu transformo em um SOP que qualquer pessoa segue.</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out-g">→ Resultado: processo documentado em operacoes/</span></div>
+      <div class="t-line"><span class="out-g">→ Pode delegar, automatizar ou ensinar à equipe</span></div>
+    </div>
+    <div class="slide-num">04</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · 5.4 ANTIGRAVITY</div>
+    <div class="eyebrow">Aula 5.4 — Antigravity avançado</div>
+    <h2>Claude Code +<br><span class="green">Antigravity</span> = modo agente.</h2>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Fluxos que combinam IA com automação real</span></li>
+      <li><span class="li-icon">▸</span><span>Sócio navega, preenche, coleta e executa por você</span></li>
+      <li><span class="li-icon">▸</span><span>Casos práticos: relatórios automáticos, monitoramento, publicação</span></li>
+      <li><span class="li-icon">▸</span><span>Seu negócio em modo agente — não em modo reativo</span></li>
+    </ul>
+    <div class="slide-num">05</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · ENCERRAMENTO</div>
+    <div class="eyebrow">Fim da jornada Padawan</div>
+    <div class="quote">
+      "Não tente. Faça. Ou não faça. Não existe tentar."
+      <div class="quote-author">— Yoda · e seu sócio de IA quando você fica procrastinando</div>
+    </div>
+    <div class="slide-num">06</div>
+  </div>
+
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_05 · PRÓXIMOS PASSOS</div>
+    <div class="eyebrow">O que fazer agora</div>
+    <div class="terminal" style="max-width:580px">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Use o sócio todo dia — ele melhora com uso</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Dê feedbacks — ele salva e não repete erros</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Crie suas próprias skills pra sua realidade</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Entre na comunidade e compartilhe o que aprendeu</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out">→ comunidade.geekacademy.site</span></div>
+      <div class="t-line"><span class="out">→ Que a Força esteja com o seu negócio.</span></div>
+    </div>
+    <div class="slide-num">07</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-05$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 7</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) { slides.forEach(s=>s.classList.remove('active')); slides[n].classList.add('active'); document.getElementById('counter').textContent=(n+1)+' / '+slides.length; document.getElementById('btnPrev').disabled=n===0; document.getElementById('btnNext').disabled=n===slides.length-1; }
+  function next() { if(cur<slides.length-1) show(++cur); }
+  function prev() { if(cur>0) show(--cur); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key===' ')next(); if(e.key==='ArrowLeft')prev(); });
+</script>
+</body>
+</html>

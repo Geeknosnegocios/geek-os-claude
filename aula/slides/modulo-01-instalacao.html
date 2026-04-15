@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 01: Instalação</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 28px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 680px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .steps { list-style: none; width: 100%; max-width: 680px; }
+  .steps li { display: flex; gap: 20px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #111; }
+  .steps li:last-child { border-bottom: none; }
+  .step-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.5; min-width: 30px; margin-top: 2px; }
+  .step-body { flex: 1; }
+  .step-title { font-size: 16px; color: #ccc; margin-bottom: 4px; }
+  .step-desc { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #3a4a3a; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 760px; }
+  .card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 22px; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.5; margin-bottom: 10px; letter-spacing: 2px; }
+  .card-body { font-size: 14px; color: #777; line-height: 1.6; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <!-- SLIDE 1: CAPA -->
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · INSTALAÇÃO</div>
+    <div class="eyebrow">Módulo 01</div>
+    <h1><span class="green">Ativando</span><br>a Força.</h1>
+    <p class="lead">5 instalações. 1 repositório. Seu sócio de IA pronto pra trabalhar.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <!-- SLIDE 2: VISÃO GERAL -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · INSTALAÇÃO</div>
+    <div class="eyebrow">O que vamos instalar</div>
+    <ul class="steps">
+      <li><span class="step-num">01</span><div class="step-body"><div class="step-title">VS Code — seu cockpit de comando</div><div class="step-desc">// editor onde você vai conversar com o sócio</div></div></li>
+      <li><span class="step-num">02</span><div class="step-body"><div class="step-title">Node.js — o motor por baixo</div><div class="step-desc">// dependência do Claude Code, versão LTS</div></div></li>
+      <li><span class="step-num">03</span><div class="step-body"><div class="step-title">Claude Code — o sócio em si</div><div class="step-desc">// instalação via npm + chave da API Anthropic</div></div></li>
+      <li><span class="step-num">04</span><div class="step-body"><div class="step-title">Antigravity — poder de automação</div><div class="step-desc">// expansão de capacidades do Claude Code</div></div></li>
+      <li><span class="step-num">05</span><div class="step-body"><div class="step-title">Geek OS Claude — o sistema operacional</div><div class="step-desc">// clone do repositório com skills e configurações</div></div></li>
+    </ul>
+    <div class="slide-num">02</div>
+  </div>
+
+  <!-- SLIDE 3: VS CODE -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · 1.1 VS CODE</div>
+    <div class="eyebrow">Aula 1.1 — VS Code</div>
+    <h2>Seu <span class="green">cockpit</span> de comando.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">1. Acesse: code.visualstudio.com</span></div>
+      <div class="t-line"><span class="out">2. Download for Windows (ou Mac)</span></div>
+      <div class="t-line"><span class="out">3. Instale normalmente → next → finish</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out">// verifique:</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">code --version</span></div>
+      <div class="t-line"><span class="out-g">1.89.0</span></div>
+    </div>
+    <div class="slide-num">03</div>
+  </div>
+
+  <!-- SLIDE 4: NODE -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · 1.2 NODE.JS</div>
+    <div class="eyebrow">Aula 1.2 — Node.js</div>
+    <h2>O <span class="green">motor</span> por baixo de tudo.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">1. Acesse: nodejs.org</span></div>
+      <div class="t-line"><span class="out">2. Baixe a versão LTS (recomendada)</span></div>
+      <div class="t-line"><span class="out">3. Instale normalmente</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out">// verifique no terminal do VS Code:</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">node --version</span></div>
+      <div class="t-line"><span class="out-g">v20.11.0  ← qualquer número aqui = ok</span></div>
+    </div>
+    <div class="slide-num">04</div>
+  </div>
+
+  <!-- SLIDE 5: CLAUDE CODE -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · 1.3 CLAUDE CODE</div>
+    <div class="eyebrow">Aula 1.3 — Claude Code</div>
+    <h2>Instalando o <span class="green">sócio</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">// instale globalmente via npm:</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">npm install -g @anthropic-ai/claude-code</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">// configure a chave da API Anthropic:</span></div>
+      <div class="t-line"><span class="out">→ console.anthropic.com → API Keys → Create Key</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">// verifique:</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">claude --version</span></div>
+      <div class="t-line"><span class="out-g">claude/1.x.x  ← sócio instalado ✓</span></div>
+    </div>
+    <div class="slide-num">05</div>
+  </div>
+
+  <!-- SLIDE 6: ANTIGRAVITY -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · 1.4 ANTIGRAVITY</div>
+    <div class="eyebrow">Aula 1.4 — Antigravity</div>
+    <h2>Expandindo os <span class="green">poderes</span> do sócio.</h2>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">O QUE É</div>
+        <div class="card-body">Camada de automação que expande o que o Claude Code consegue fazer na sua operação</div>
+      </div>
+      <div class="card">
+        <div class="card-label">POR QUE USAR</div>
+        <div class="card-body">Conecta o sócio com mais ferramentas, fluxos e automações do seu negócio</div>
+      </div>
+    </div>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#2a3a2a;margin-top:24px">// siga as instruções da aula em vídeo para instalação</p>
+    <div class="slide-num">06</div>
+  </div>
+
+  <!-- SLIDE 7: CLONAR REPO -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · 1.5 GEEK OS CLAUDE</div>
+    <div class="eyebrow">Aula 1.5 — Repositório</div>
+    <h2>Clonando o <span class="green">sistema operacional</span>.</h2>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">// opção 1 — via prompt (mais fácil):</span></div>
+      <div class="t-line"><span class="out-g">Instala pra mim o repositório</span></div>
+      <div class="t-line"><span class="out-g">https://github.com/Geeknosnegocios/geek-os-claude.git</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">// opção 2 — via terminal:</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">git clone https://github.com/Geeknosnegocios/geek-os-claude.git</span></div>
+      <div class="t-line"><span class="ps">$ </span><span class="cmd">cd geek-os-claude && code .</span></div>
+    </div>
+    <div class="slide-num">07</div>
+  </div>
+
+  <!-- SLIDE 8: CHECKPOINT -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_01 · CHECKPOINT</div>
+    <div class="eyebrow">Checkpoint — tudo instalado?</div>
+    <div class="terminal" style="max-width:560px">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> VS Code instalado e funcionando</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Node.js instalado (node --version ✓)</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Claude Code instalado (claude --version ✓)</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Antigravity instalado e configurado</span></div>
+      <div class="t-line"><span class="out-g">[ok]</span><span class="out"> Repositório clonado e aberto no VS Code</span></div>
+      <div class="t-line" style="margin-top:12px"><span class="out-y">→ Próximo: </span><span class="out">Módulo 02 — calibrando o sócio</span></div>
+    </div>
+    <div class="slide-num">08</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-01$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 8</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) { slides.forEach(s=>s.classList.remove('active')); slides[n].classList.add('active'); document.getElementById('counter').textContent=(n+1)+' / '+slides.length; document.getElementById('btnPrev').disabled=n===0; document.getElementById('btnNext').disabled=n===slides.length-1; }
+  function next() { if(cur<slides.length-1) show(++cur); }
+  function prev() { if(cur>0) show(--cur); }
+  document.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'||e.key===' ')next(); if(e.key==='ArrowLeft')prev(); });
+</script>
+</body>
+</html>

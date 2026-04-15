@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geek OS Claude — Módulo 00: Missão Briefing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0f; font-family: 'Inter', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  .slides { flex: 1; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#00ff4106 1px, transparent 1px), linear-gradient(90deg, #00ff4106 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+  .corner-tl, .corner-br { position: absolute; width: 24px; height: 24px; border-color: #00ff4130; border-style: solid; }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+  .module-badge { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.4; letter-spacing: 3px; }
+  .slide-num { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #1a2a1a; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.6; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 52px; font-weight: 700; color: #f0f0f0; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; text-align: center; }
+  h1 .green { color: #00ff41; }
+  h2 { font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 600; color: #e0e0e0; line-height: 1.2; margin-bottom: 32px; letter-spacing: -1px; }
+  h2 .green { color: #00ff41; }
+  .lead { font-size: 17px; color: #555; line-height: 1.7; max-width: 640px; text-align: center; }
+  .quote { font-size: 20px; color: #777; font-style: italic; line-height: 1.6; max-width: 680px; border-left: 2px solid #00ff4140; padding-left: 24px; }
+  .quote-author { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #00ff41; opacity: 0.5; margin-top: 12px; }
+  .terminal { background: #050508; border: 1px solid #1a2a1a; border-radius: 6px; padding: 24px 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; width: 100%; max-width: 680px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .t-line { margin-bottom: 6px; line-height: 1.6; }
+  .ps { color: #00ff41; } .cmd { color: #e0e0e0; } .out { color: #555; } .out-g { color: #00ff41; } .out-y { color: #ffbd2e; }
+  .list { list-style: none; width: 100%; max-width: 680px; }
+  .list li { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #111; font-size: 16px; color: #bbb; line-height: 1.5; }
+  .list li:last-child { border-bottom: none; }
+  .li-icon { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; min-width: 20px; margin-top: 2px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 760px; }
+  .card { background: #0d120d; border: 1px solid #1a2a1a; border-radius: 4px; padding: 22px; }
+  .card-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00ff41; opacity: 0.5; margin-bottom: 10px; letter-spacing: 2px; }
+  .card-body { font-size: 15px; color: #888; line-height: 1.6; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 32px; border-top: 1px solid #111; background: #050508; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #00ff41; opacity: 0.4; }
+  .nav-controls { display: flex; gap: 8px; align-items: center; }
+  button { background: none; border: 1px solid #1a2a1a; color: #444; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 6px 14px; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  button:hover { border-color: #00ff41; color: #00ff41; }
+  button:disabled { opacity: 0.2; cursor: default; }
+  .nav-counter { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
+</style>
+</head>
+<body>
+<div class="slides">
+
+  <!-- SLIDE 1: CAPA -->
+  <div class="slide active">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">Geek OS Claude · Aula 0.1</div>
+    <h1>Bem-vindo ao<br><span class="green">lado sombrio</span>.</h1>
+    <p class="lead">Hoje você instala seu primeiro sócio de IA.<br>Nada mais será igual depois disso.</p>
+    <div class="slide-num">01</div>
+  </div>
+
+  <!-- SLIDE 2: CITAÇÃO JEDI -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="quote">
+      "Pode ser um aliado poderoso, ou o caminho mais rápido para o lado sombrio dos negócios."
+      <div class="quote-author">— Todo Jedi que aprendeu a usar IA antes da concorrência</div>
+    </div>
+    <div class="slide-num">02</div>
+  </div>
+
+  <!-- SLIDE 3: O QUE É -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">O que é o Geek OS Claude</div>
+    <h2>Não é uma ferramenta.<br>É um <span class="green">sistema operacional</span><br>pra sua empresa.</h2>
+    <div class="slide-num">03</div>
+  </div>
+
+  <!-- SLIDE 4: O SÓCIO -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">Seu novo sócio</div>
+    <ul class="list">
+      <li><span class="li-icon">▸</span><span>Conhece cada detalhe do seu negócio</span></li>
+      <li><span class="li-icon">▸</span><span>Nunca esquece — memória permanente</span></li>
+      <li><span class="li-icon">▸</span><span>Disponível 24h, sem pedir aumento</span></li>
+      <li><span class="li-icon">▸</span><span>Executa tarefas, cria conteúdo, analisa dados</span></li>
+      <li><span class="li-icon">▸</span><span>Fica mais inteligente quanto mais você usa</span></li>
+    </ul>
+    <div class="slide-num">04</div>
+  </div>
+
+  <!-- SLIDE 5: TERMINAL DEMO -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">Como funciona na prática</div>
+    <div class="terminal">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="ps">geek@os:~$ </span><span class="cmd">claude</span></div>
+      <div class="t-line"><span class="out">Iniciando Geek OS Claude...</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="ps">→ </span><span class="out-g">/setup</span></div>
+      <div class="t-line"><span class="out">Sócio: E aí! Vou te fazer algumas perguntas sobre o negócio.</span></div>
+      <div class="t-line"><span class="out">       Quanto mais você me contar, mais útil eu consigo ser.</span></div>
+      <div class="t-line" style="margin-top:8px"><span class="out">Qual é o seu nome?</span> <span class="out-y">_</span></div>
+    </div>
+    <div class="slide-num">05</div>
+  </div>
+
+  <!-- SLIDE 6: A JORNADA -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">O que vamos construir juntos</div>
+    <div class="two-col">
+      <div class="card"><div class="card-label">MOD_01 · SETUP</div><div class="card-body">Instalar VS Code, Claude Code e Antigravity</div></div>
+      <div class="card"><div class="card-label">MOD_02 · ONBOARDING</div><div class="card-body">Calibrar o sócio com a realidade do seu negócio</div></div>
+      <div class="card"><div class="card-label">MOD_03 · SKILLS</div><div class="card-body">Dominar os 8 poderes do dia a dia</div></div>
+      <div class="card"><div class="card-label">MOD_04 · AVANÇADO</div><div class="card-body">Criar suas próprias skills e integrar MCPs</div></div>
+    </div>
+    <div class="slide-num">06</div>
+  </div>
+
+  <!-- SLIDE 7: CTA -->
+  <div class="slide">
+    <div class="corner-tl"></div><div class="corner-br"></div>
+    <div class="module-badge">MOD_00 · MISSÃO BRIEFING</div>
+    <div class="eyebrow">Próximo passo</div>
+    <h2>Baixe o kit e<br>prepare o ambiente.</h2>
+    <div class="terminal" style="max-width:500px">
+      <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="t-line"><span class="out">[ ] VS Code instalado</span></div>
+      <div class="t-line"><span class="out">[ ] Node.js instalado</span></div>
+      <div class="t-line"><span class="out">[ ] Claude Code instalado</span></div>
+      <div class="t-line"><span class="out">[ ] Antigravity instalado</span></div>
+      <div class="t-line"><span class="out">[ ] Repositório clonado</span></div>
+    </div>
+    <div class="slide-num">07</div>
+  </div>
+
+</div>
+
+<nav>
+  <div class="nav-logo">geek@os:~/curso/mod-00$</div>
+  <div class="nav-controls">
+    <button onclick="prev()" id="btnPrev" disabled>← prev</button>
+    <span class="nav-counter" id="counter">1 / 7</span>
+    <button onclick="next()" id="btnNext">next →</button>
+  </div>
+</nav>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  function show(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[n].classList.add('active');
+    document.getElementById('counter').textContent = (n+1) + ' / ' + slides.length;
+    document.getElementById('btnPrev').disabled = n === 0;
+    document.getElementById('btnNext').disabled = n === slides.length - 1;
+  }
+  function next() { if (cur < slides.length-1) show(++cur); }
+  function prev() { if (cur > 0) show(--cur); }
+  document.addEventListener('keydown', e => { if (e.key==='ArrowRight'||e.key===' ') next(); if (e.key==='ArrowLeft') prev(); });
+</script>
+</body>
+</html>
