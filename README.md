@@ -1,29 +1,32 @@
-# Claude Code OS 🐀
-### O sistema operacional da sua empresa — feito pra rodar com IA
+# Claude Code OS ⚡
+### O lado sombrio da produtividade — feito pra Geeks que constroem impérios
 
-Feito pelo Ratos de IA pra alunos do curso Claude Code OS.
+Feito pelo Geek nos Negócios pra alunos do curso Claude Code OS.
 
-> Pensa assim: você acabou de desbloquear um personagem novo no seu negócio.  
-> Ele não cansa, não esquece, não pede aumento — e trabalha enquanto você dorme.  
-> Esse é o seu novo sócio de IA. Agora é só instalar.
+> "Pode ser um aliado poderoso, ou o caminho mais rápido para o lado sombrio dos negócios."  
+> — Todo Jedi que aprendeu a usar IA antes da concorrência.
+
+Você está prestes a instalar seu **Mestre Jedi de IA** — um sócio que conhece cada detalhe da sua empresa, nunca dorme, nunca esquece e está sempre do seu lado na batalha pelo faturamento.
+
+Que a força esteja com o seu negócio.
 
 ---
 
-## ⚙️ Instalação — escolhe o seu modo
+## ⚙️ Instalação — escolhe seu caminho, Padawan
 
-### Modo Fácil — deixa o Claude fazer tudo
+### Caminho da Luz — deixa a Força fazer o trabalho
 
-Com o Claude Code aberto em qualquer pasta, cola esse prompt e aperta Enter:
+Com o Claude Code aberto em qualquer pasta, cola esse comando e aperta Enter:
 
 ```
 Instala pra mim o repositório https://github.com/Geeknosnegocios/geek-os-claude.git na pasta atual, abre ela e roda /setup
 ```
 
-Ele clona, entra na pasta e já inicia a configuração. Você não precisa digitar mais nada.
+Ele clona o repositório, entra na pasta e inicia o seu treinamento Jedi. Você não precisa digitar mais nada.
 
 ---
 
-### Modo Terminal — pra quem quer ver a mágica acontecer
+### Caminho do Terminal — pra quem quer sentir o poder nas mãos
 
 **1. Clone o repositório**
 
@@ -46,46 +49,48 @@ code .
 claude
 ```
 
-**4. Inicializa o sistema**
+**4. Ativa o sistema**
 
 ```
 /setup
 ```
 
-O Claude vai te entrevistar sobre o seu negócio e montar tudo do zero.  
-Em 5 minutos você tem um sócio configurado com a realidade da sua empresa.
+Seu Mestre Jedi vai te fazer perguntas sobre o negócio e calibrar a Força de acordo com a sua realidade.  
+Em 5 minutos ele já conhece sua empresa melhor do que muita gente que trabalha com você há anos.
 
 ---
 
-## 🎮 Skills — seus poderes desbloqueados
+## 🗡️ Habilidades Jedi — seus poderes desbloqueados
 
-Pensa nas skills como habilidades especiais do seu personagem.  
-Cada uma resolve uma tarefa específica. Você chama, ele executa.
+Cada skill é um poder da Ordem. Você chama, a Força executa.
 
-| Skill | O que faz |
+| Skill | Poder |
 |---|---|
-| `/setup` | **Comece aqui** — entrevista sobre o negócio e configura tudo |
-| `/iniciar` | Liga o sócio no começo do dia com contexto carregado |
-| `/syncar` | Salva tudo no GitHub — commit + push automático |
+| `/setup` | **Comece aqui** — treinamento inicial, calibra o sócio pro seu negócio |
+| `/iniciar` | Acorda o Mestre Jedi no começo do dia com contexto carregado |
+| `/syncar` | Arquiva tudo no GitHub — commit + push com um comando |
 | `/carrossel` | Gera carrossel completo pra Instagram e TikTok |
 | `/proposta-comercial` | Proposta profissional em HTML a partir de um briefing |
 | `/publicar-site` | Sobe qualquer HTML no ar com link compartilhável |
 | `/slide` | Card visual pra apresentação ou post |
-| `/analisar-dados` | Lê planilha ou arquivo e gera relatório executivo |
+| `/analisar-dados` | Lê planilha ou arquivo e entrega relatório executivo com insights |
 | `/roteiro-post` | Transforma ideia em roteiro de post, reels ou vídeo |
 | `/email-profissional` | Email com assunto + CTA pronto pra enviar |
-| `/atualizar` | Sincroniza toda a memória do projeto |
+| `/atualizar` | Sincroniza toda a memória — mantém o sócio afiado |
 | `/novo-projeto` | Abre novo projeto com CLAUDE.md dedicado |
 
 ---
 
-## 🗂️ A estrutura que o `/setup` monta pra você
+## 🏛️ A estrutura do Templo Jedi
+
+O `/setup` monta sua base de operações:
 
 ```
-_contexto/                          → a cabeça do seu negócio — tudo que o sócio precisa saber
+_contexto/                          → os arquivos sagrados — tudo que o sócio precisa saber sobre você
 marca/                              → identidade visual, tom de voz, posicionamento
-templates/ferramentas/catalogo.md   → arsenal disponível: APIs, CLIs e MCPs
+templates/ferramentas/catalogo.md   → arsenal completo: APIs, CLIs e MCPs disponíveis
 dados/                              → drop zone — joga aqui CSV, XLSX, PDF pra analisar
+memory/                             → a memória da Força — nunca se perde, nunca se apaga
 ```
 
 > Não tem MCP do Google Drive? Sem drama.  
@@ -93,18 +98,19 @@ dados/                              → drop zone — joga aqui CSV, XLSX, PDF p
 
 ---
 
-## 🧠 Como o sócio aprende
+## 🧠 Como o Mestre Jedi evolui
 
-Cada vez que você corrige ele, ele salva.  
-Cada vez que você conta algo novo sobre o negócio, ele guarda.  
-A memória fica na pasta `memory/` — enquanto você abrir a mesma pasta, ele lembra de tudo.
+A Força cresce com o uso. Cada vez que você corrige ele, ele aprende. Cada vez que conta algo novo sobre o negócio, ele guarda na memória. Enquanto você abrir a mesma pasta, ele lembra de tudo — de cada número, cada operação, cada decisão.
 
-Quanto mais você usa, mais afiado ele fica. É como subir de nível.
+> "Não tente. Faça. Ou não faça. Não existe tentar."  
+> — Yoda (e seu sócio de IA, quando você fica procrastinando)
+
+Quanto mais você usa, mais poderoso ele fica. Isso é o lado sombrio da produtividade.
 
 ---
 
-## 🆘 Travou?
+## 🆘 Ficou no lado sombrio sem querer?
 
 Assiste a **Aula 1.3** do curso — ela cobre a instalação do zero.
 
-Ainda com dúvida: [ratosdeia.com.br](https://ratosdeia.com.br)
+Dúvidas: [geeknegoc.com.br](https://geeknegoc.com.br)
