@@ -1,24 +1,29 @@
-# Claude Code OS — Kit de Boas-Vindas 🐀
+# Claude Code OS 🐀
+### O sistema operacional da sua empresa — feito pra rodar com IA
 
 Feito pelo Ratos de IA pra alunos do curso Claude Code OS.
 
+> Pensa assim: você acabou de desbloquear um personagem novo no seu negócio.  
+> Ele não cansa, não esquece, não pede aumento — e trabalha enquanto você dorme.  
+> Esse é o seu novo sócio de IA. Agora é só instalar.
+
 ---
 
-## Como instalar
+## ⚙️ Instalação — escolhe o seu modo
 
-### Opção 1 — Via prompt (mais fácil)
+### Modo Fácil — deixa o Claude fazer tudo
 
-Com o Claude Code aberto em qualquer pasta, copie e cole esse prompt:
+Com o Claude Code aberto em qualquer pasta, cola esse prompt e aperta Enter:
 
 ```
 Instala pra mim o repositório https://github.com/Geeknosnegocios/geek-os-claude.git na pasta atual, abre ela e roda /setup
 ```
 
-O Claude faz tudo: clona o repositório, entra na pasta e inicia a configuração.
+Ele clona, entra na pasta e já inicia a configuração. Você não precisa digitar mais nada.
 
 ---
 
-### Opção 2 — Via terminal
+### Modo Terminal — pra quem quer ver a mágica acontecer
 
 **1. Clone o repositório**
 
@@ -27,71 +32,79 @@ git clone https://github.com/Geeknosnegocios/geek-os-claude.git
 cd geek-os-claude
 ```
 
-**2. Abra no VS Code**
+**2. Abre no VS Code**
 
 ```bash
 code .
 ```
 
-**3. Abra o terminal integrado** (`Ctrl + \`` no Windows / `Cmd + \`` no Mac) e rode:
+**3. Abre o terminal integrado**
+
+`Ctrl + \`` no Windows · `Cmd + \`` no Mac
 
 ```bash
 claude
 ```
 
-**4. Chame o setup**
+**4. Inicializa o sistema**
 
 ```
 /setup
 ```
 
-O Claude vai te fazer algumas perguntas e configurar o sistema pro seu negócio. Em 5 minutos você tem tudo pronto.
+O Claude vai te entrevistar sobre o seu negócio e montar tudo do zero.  
+Em 5 minutos você tem um sócio configurado com a realidade da sua empresa.
 
 ---
 
-## O que vem no kit
+## 🎮 Skills — seus poderes desbloqueados
 
-### Skills prontas pra usar
+Pensa nas skills como habilidades especiais do seu personagem.  
+Cada uma resolve uma tarefa específica. Você chama, ele executa.
 
 | Skill | O que faz |
 |---|---|
-| `/setup` | Configura o sistema pro seu negócio (comece por aqui) |
-| `/iniciar` | Carrega o contexto do negócio no começo de cada sessão de trabalho |
-| `/syncar` | Salva o trabalho no GitHub (commit + push, configura na primeira vez) |
-| `/carrossel` | Cria carrosséis pra Instagram e TikTok com a sua identidade visual |
-| `/proposta-comercial` | Gera proposta profissional em HTML a partir de um briefing |
-| `/publicar-site` | Publica qualquer HTML no ar com um link compartilhável |
-| `/slide` | Cria slide/card visual pra apresentação |
-| `/analisar-dados` | Analisa um arquivo e gera resumo executivo com insights |
-| `/roteiro-post` | Transforma ideia ou texto em roteiro de post ou vídeo |
-| `/email-profissional` | Rascunha email profissional a partir de contexto livre |
-| `/atualizar` | Varre o projeto e atualiza os arquivos de contexto que ficaram desatualizados |
-| `/novo-projeto` | Cria pasta de projeto novo com CLAUDE.md dedicado (entrevista sobre o projeto) |
+| `/setup` | **Comece aqui** — entrevista sobre o negócio e configura tudo |
+| `/iniciar` | Liga o sócio no começo do dia com contexto carregado |
+| `/syncar` | Salva tudo no GitHub — commit + push automático |
+| `/carrossel` | Gera carrossel completo pra Instagram e TikTok |
+| `/proposta-comercial` | Proposta profissional em HTML a partir de um briefing |
+| `/publicar-site` | Sobe qualquer HTML no ar com link compartilhável |
+| `/slide` | Card visual pra apresentação ou post |
+| `/analisar-dados` | Lê planilha ou arquivo e gera relatório executivo |
+| `/roteiro-post` | Transforma ideia em roteiro de post, reels ou vídeo |
+| `/email-profissional` | Email com assunto + CTA pronto pra enviar |
+| `/atualizar` | Sincroniza toda a memória do projeto |
+| `/novo-projeto` | Abre novo projeto com CLAUDE.md dedicado |
 
 ---
 
-### Pastas geradas pelo `/setup`
+## 🗂️ A estrutura que o `/setup` monta pra você
 
 ```
-_contexto/                          → contexto do seu negócio e preferências
-marca/                              → guia de identidade visual da sua marca
-templates/ferramentas/catalogo.md   → APIs, CLIs e MCPs disponíveis pra usar em skills
+_contexto/                          → a cabeça do seu negócio — tudo que o sócio precisa saber
+marca/                              → identidade visual, tom de voz, posicionamento
+templates/ferramentas/catalogo.md   → arsenal disponível: APIs, CLIs e MCPs
+dados/                              → drop zone — joga aqui CSV, XLSX, PDF pra analisar
 ```
 
----
-
-### Pasta `dados/`
-
-Drop zone pra arquivos que você quer analisar (CSV, XLSX, TXT, PDF).
-
-Útil quando você não tem MCP de Google Drive instalado.
-
-Use com `/analisar-dados dados/seu-arquivo.csv`
+> Não tem MCP do Google Drive? Sem drama.  
+> Exporta o arquivo, joga na pasta `dados/` e roda `/analisar-dados dados/seu-arquivo.csv`
 
 ---
 
-## Ficou travado?
+## 🧠 Como o sócio aprende
 
-Assiste a **Aula 1.3** do curso (instalação do Claude Code).
+Cada vez que você corrige ele, ele salva.  
+Cada vez que você conta algo novo sobre o negócio, ele guarda.  
+A memória fica na pasta `memory/` — enquanto você abrir a mesma pasta, ele lembra de tudo.
 
-Dúvidas: [ratosdeia.com.br](https://ratosdeia.com.br)
+Quanto mais você usa, mais afiado ele fica. É como subir de nível.
+
+---
+
+## 🆘 Travou?
+
+Assiste a **Aula 1.3** do curso — ela cobre a instalação do zero.
+
+Ainda com dúvida: [ratosdeia.com.br](https://ratosdeia.com.br)
