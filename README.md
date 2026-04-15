@@ -1,7 +1,7 @@
-# Claude Code OS ⚡
+# Geek OS Claude ⚡
 ### O lado sombrio da produtividade — feito pra Geeks que constroem impérios
 
-Feito pelo Geek nos Negócios pra alunos do curso Claude Code OS.
+Feito pelo Geek nos Negócios pra alunos do curso Geek OS Claude.
 
 > "Pode ser um aliado poderoso, ou o caminho mais rápido para o lado sombrio dos negócios."  
 > — Todo Jedi que aprendeu a usar IA antes da concorrência.
