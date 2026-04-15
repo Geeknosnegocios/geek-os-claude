@@ -113,4 +113,4 @@ Quanto mais você usa, mais poderoso ele fica. Isso é o lado sombrio da produti
 
 Assiste a **Aula 1.3** do curso — ela cobre a instalação do zero.
 
-Dúvidas: [geeknegoc.com.br](https://geeknegoc.com.br)
+Dúvidas: [comunidade.geekacademy.site](https://comunidade.geekacademy.site)
