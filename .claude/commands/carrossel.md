@@ -1,28 +1,45 @@
-Crie um carrossel profissional para Instagram ou TikTok com a identidade visual do negócio.
+Crie um carrossel profissional pra Instagram ou TikTok com a identidade visual do negócio.
 
-### Antes de criar, pergunte:
+## ETAPA 1 — Briefing rápido
 
-1. Qual é o tema ou assunto do carrossel?
-2. Qual é o objetivo? (educar, vender, gerar engajamento, posicionar autoridade?)
-3. É para Instagram ou TikTok?
-4. Tem alguma referência de estilo ou exemplo que ele gosta?
+Pergunte (em uma única mensagem, não uma por uma):
 
-### Leia o contexto de marca:
+1. Tema ou assunto do carrossel
+2. Objetivo: educar, vender, gerar engajamento ou posicionar autoridade?
+3. Plataforma: Instagram (1080x1350, 4:5) ou TikTok/Reels (1080x1920, 9:16)?
+4. Quantos slides? (padrão: 7 — capa + 5 conteúdo + CTA)
+5. Tem alguma referência de estilo que ele gosta?
 
-Verifique `marca/` para pegar cores, fontes, tom de voz e identidade visual. Se não existir, pergunte:
-- Cores principais da marca (código hex se possível)
+## ETAPA 2 — Carregar contexto de marca
+
+Leia `marca/` pra pegar cores (hex), fontes, tom de voz e posicionamento. Leia `memory/marketing.md` pra confirmar canal e perfil de cliente. Se `marca/` estiver vazio, pergunte:
+
+- Cores principais (hex se possível)
 - Fonte ou estilo visual preferido
 - Tom de voz (descontraído, profissional, direto, inspiracional?)
 
-### Estrutura do carrossel:
+## ETAPA 3 — Estrutura padrão
 
-- **Slide 1 (Capa):** Título impactante que para o scroll. Máx. 8 palavras.
-- **Slides 2–7 (Conteúdo):** Um ponto por slide. Título + 2–3 linhas de desenvolvimento.
-- **Último slide (CTA):** Chamada para ação clara — comentar, salvar, seguir, clicar no link.
+- **Slide 1 (Capa):** título que para o scroll. Máx. 8 palavras.
+- **Slides 2 a N-1 (Conteúdo):** 1 ponto por slide. Título curto + 2-3 linhas de desenvolvimento.
+- **Último slide (CTA):** chamada clara — comentar, salvar, seguir, clicar no link.
 
-### Entregue:
+## ETAPA 4 — Entrega
 
-1. O roteiro completo slide a slide com os textos prontos
-2. Sugestões de imagem ou visual para cada slide
-3. Hashtags relevantes (10–15) para o nicho do negócio
-4. Legenda pronta para postar junto com o carrossel
+Salve o roteiro completo em:
+
+```
+conteudo/carrosseis/carrossel-[tema-curto]-[YYYY-MM-DD].md
+```
+
+(Crie a pasta `conteudo/carrosseis/` se não existir.)
+
+O arquivo deve conter:
+
+1. **Roteiro slide a slide** com texto pronto pra cada um
+2. **Sugestão visual** pra cada slide (imagem, ícone, cor de fundo)
+3. **Hashtags** (10-15) relevantes pro nicho
+4. **Legenda** pronta pra postar junto
+5. **Primeiro comentário fixado** (opcional, pra puxar engajamento)
+
+Ao finalizar, mostre o caminho do arquivo e sugira: "Quer que eu gere os slides visuais com `/slide`?"

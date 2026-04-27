@@ -1,23 +1,42 @@
-Rascunhe um email profissional pronto para enviar a partir de contexto livre.
+Rascunhe um email profissional pronto pra enviar a partir de contexto livre.
 
-### Pergunte:
+## ETAPA 1 — Briefing
 
-1. Para quem é o email? (cliente, fornecedor, parceiro, lead, equipe?)
-2. Qual é o objetivo? (fechar negócio, cobrar, apresentar proposta, agradecer, follow-up, solicitar algo?)
-3. Contexto livre: me conta o que aconteceu, o que precisa dizer e qual tom quer usar (formal, direto, cordial?)
-4. Tem algum detalhe importante que não pode faltar?
+Pergunte (em mensagem única):
 
-### Gere o email com:
+1. Pra quem é o email? (cliente, fornecedor, parceiro, lead, equipe?)
+2. Objetivo: fechar negócio, cobrar, apresentar proposta, agradecer, follow-up, solicitar algo?
+3. Contexto livre: o que aconteceu, o que precisa dizer, qual tom (formal, direto, cordial)?
+4. Algum detalhe que não pode faltar?
 
-- **Assunto:** direto, que incentiva a abertura (não genérico)
-- **Saudação:** adequada ao contexto
-- **Corpo:** claro, sem rodeios, parágrafos curtos
-- **CTA:** uma ação clara no final (responder, confirmar, agendar, clicar)
-- **Assinatura:** com nome e cargo (puxe do `_contexto/` se houver)
+## ETAPA 2 — Contexto
 
-### Entregue também:
+Puxe nome, cargo e dados de contato do fundador de `memory/perfil_fundador.md` (ou `_contexto/`) pra montar a assinatura. Se for email pra cliente existente, cheque `memory/clientes.md` pra ver se há histórico relevante.
 
-- Uma versão alternativa do assunto (para teste A/B)
-- Sugestão de horário ideal para envio, se relevante
+## ETAPA 3 — Estrutura
 
-Tom padrão: profissional mas humano. Sem linguagem corporativa vazia.
+- **Assunto:** direto, que incentiva abertura — não genérico
+- **Saudação:** adequada ao contexto e nível de proximidade
+- **Corpo:** parágrafos curtos, sem rodeios, sem linguagem corporativa vazia
+- **CTA:** uma ação clara no fim (responder, confirmar, agendar, clicar)
+- **Assinatura:** com nome, cargo e contato
+
+## ETAPA 4 — Entrega
+
+Salve em:
+
+```
+operacoes/emails/email-[destinatario-curto]-[YYYY-MM-DD].md
+```
+
+(Crie a pasta `operacoes/emails/` se não existir.)
+
+O arquivo deve conter:
+
+1. **Versão A** (assunto principal + corpo)
+2. **Versão B do assunto** (alternativa pra teste A/B)
+3. **Sugestão de horário ideal de envio**, se relevante (terça/quarta de manhã pra B2B; quinta de noite pra leads frios; etc.)
+
+Tom padrão: profissional mas humano. Direto sem ser seco.
+
+Ao finalizar, mostre o caminho do arquivo e o texto pronto pra colar no cliente de email.
