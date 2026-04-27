@@ -1,3 +1,7 @@
+---
+description: Abre projeto novo em operacoes/projetos/ com CLAUDE.md dedicado após entrevista
+---
+
 Crie uma pasta de projeto novo com CLAUDE.md dedicado, após uma entrevista sobre o projeto.
 
 ### Conduza a entrevista perguntando:

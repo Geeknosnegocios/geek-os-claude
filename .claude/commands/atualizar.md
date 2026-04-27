@@ -1,3 +1,7 @@
+---
+description: Sincroniza memory/, _contexto/, marca/ e catalogo de ferramentas — mantém o sócio afiado
+---
+
 Varra o projeto inteiro e atualize todos os arquivos de contexto que ficaram desatualizados.
 
 ## ETAPA 1 — Mapear o estado atual

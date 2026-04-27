@@ -1,3 +1,7 @@
+---
+description: Proposta comercial profissional em HTML a partir de briefing
+---
+
 Gere uma proposta comercial profissional em HTML a partir de um briefing.
 
 ### Colete o briefing perguntando:

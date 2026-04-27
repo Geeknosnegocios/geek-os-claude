@@ -1,3 +1,8 @@
+---
+description: Treinamento inicial — monta a estrutura do negócio e calibra o sócio de IA via onboarding em 7 blocos
+argument-hint: (sem argumentos)
+---
+
 Treinamento inicial do Mestre Jedi. Calibra o sócio de IA pro negócio do fundador.
 
 ---

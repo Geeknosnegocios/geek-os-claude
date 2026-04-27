@@ -1,3 +1,8 @@
+---
+description: Gera carrossel completo pra Instagram ou TikTok com texto, hashtags e legenda
+argument-hint: [tema opcional]
+---
+
 Crie um carrossel profissional pra Instagram ou TikTok com a identidade visual do negócio.
 
 ## ETAPA 1 — Briefing rápido

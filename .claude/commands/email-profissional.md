@@ -1,3 +1,7 @@
+---
+description: Rascunha email profissional pronto pra enviar com assunto, corpo e CTA
+---
+
 Rascunhe um email profissional pronto pra enviar a partir de contexto livre.
 
 ## ETAPA 1 — Briefing

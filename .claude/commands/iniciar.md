@@ -1,3 +1,7 @@
+---
+description: Acorda o sócio de IA com o contexto completo do negócio carregado e diagnóstico em 3 frentes
+---
+
 Carregue o contexto completo do negócio e inicie a sessão como sócio.
 
 ## ETAPA 1 — Carregar contexto

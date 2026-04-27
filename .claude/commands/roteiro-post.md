@@ -1,3 +1,7 @@
+---
+description: Transforma ideia em roteiro de post, reels, vídeo longo ou thread
+---
+
 Transforme uma ideia ou texto bruto em roteiro de post ou vídeo pronto pra gravar/publicar.
 
 ## ETAPA 1 — Briefing

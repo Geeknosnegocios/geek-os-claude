@@ -1,3 +1,7 @@
+---
+description: Gera slide ou card visual em HTML pra apresentação ou post
+---
+
 Crie um slide ou card visual profissional em HTML para apresentação ou post.
 
 ### Pergunte:

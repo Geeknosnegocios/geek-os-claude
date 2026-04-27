@@ -14,15 +14,26 @@ Que a força esteja com o seu negócio.
 
 ## ⚙️ Instalação — escolhe seu caminho, Padawan
 
-### Caminho da Luz — deixa a Força fazer o trabalho
+> **⚠️ Importante:** os slash commands (`/setup`, `/iniciar` etc.) só carregam quando o `claude` é iniciado **dentro da pasta `geek-os-claude`**. Se você rodar `claude` em outra pasta, eles não aparecem.
+
+---
+
+### Caminho da Luz — peça pro Claude clonar pra você
 
 Com o Claude Code aberto em qualquer pasta, cola esse comando e aperta Enter:
 
 ```
-Instala pra mim o repositório https://github.com/Geeknosnegocios/geek-os-claude.git na pasta atual, abre ela e roda /setup
+Clone https://github.com/Geeknosnegocios/geek-os-claude.git na pasta atual e me diga o caminho completo da pasta criada.
 ```
 
-Ele clona o repositório, entra na pasta e inicia o seu treinamento Jedi. Você não precisa digitar mais nada.
+Quando ele terminar, **saia do Claude** (`/exit`), entre na pasta clonada e abra o Claude de novo:
+
+```bash
+cd geek-os-claude
+claude
+```
+
+Agora digite `/setup` e o treinamento começa.
 
 ---
 
@@ -35,13 +46,13 @@ git clone https://github.com/Geeknosnegocios/geek-os-claude.git
 cd geek-os-claude
 ```
 
-**2. Abre no VS Code**
+**2. Abre no VS Code (opcional)**
 
 ```bash
 code .
 ```
 
-**3. Abre o terminal integrado**
+**3. Abre o terminal integrado dentro da pasta `geek-os-claude`**
 
 `Ctrl + \`` no Windows · `Cmd + \`` no Mac
 
@@ -49,7 +60,11 @@ code .
 claude
 ```
 
-**4. Ativa o sistema**
+**4. Confirma que os comandos carregaram**
+
+Digita `/` e olha se `setup`, `iniciar`, `syncar` aparecem no autocomplete. Se não aparecerem, você não está dentro da pasta `geek-os-claude` — saia, dê `cd geek-os-claude` e rode `claude` de novo.
+
+**5. Ativa o sistema**
 
 ```
 /setup

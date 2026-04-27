@@ -1,3 +1,8 @@
+---
+description: Lê CSV/XLSX/PDF de dados/ e entrega relatório executivo com insights acionáveis
+argument-hint: [caminho-do-arquivo]
+---
+
 Analise um arquivo de dados e gere um resumo executivo com insights acionáveis.
 
 ### Uso:

@@ -1,3 +1,9 @@
+---
+description: Publica HTML no ar via Vercel e gera link compartilhável
+allowed-tools: Bash(vercel:*), Bash(npm:*)
+argument-hint: [caminho-do-arquivo-ou-pasta]
+---
+
 Publique um arquivo HTML no ar e gere um link compartilhável — mas antes, questione o contexto estratégico.
 
 ### Antes de executar — pergunte como sócio:

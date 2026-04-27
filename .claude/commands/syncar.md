@@ -1,3 +1,8 @@
+---
+description: Commit + push de tudo que mudou na sessão pro GitHub (cria repo automático na primeira vez)
+allowed-tools: Bash(git:*), Bash(gh:*)
+---
+
 Salve todo o trabalho desta sessão no GitHub (commit + push).
 
 ---
